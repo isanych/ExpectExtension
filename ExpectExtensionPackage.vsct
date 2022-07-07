@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <!--This is the file that defines the IDs for all the commands exposed by VisualStudio. -->
+  <Extern href="stdidcmd.h"/>
+
+  <!--This header contains the command ids for the menus provided by the shell. -->
+  <Extern href="vsshlids.h"/>
+
+  <!--The Commands section is where commands, menus, and menu groups are defined.
+      This section uses a Guid to identify the package that provides the command defined inside it. -->
+  <Commands package="guidExpectExtensionPackage">
+    <Groups>
+      <Group guid="guidExpectExtensionPackageCmdSet" id="ExpectMenuGroup" priority="0x0600">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_TOOLS"/>
+      </Group>
+    </Groups>
+
+    <Buttons>
+      <Button guid="guidExpectExtensionPackageCmdSet" id="GenCommandId" priority="0x0100" type="Button">
+        <Parent guid="guidExpectExtensionPackageCmdSet" id="ExpectMenuGroup" />
+        <Strings>
+          <ButtonText>GenExpect</ButtonText>
+        </Strings>
+      </Button>
+      <Button guid="guidExpectExtensionPackageCmdSet" id="DoCommandId" priority="0x0100" type="Button">
+        <Parent guid="guidExpectExtensionPackageCmdSet" id="ExpectMenuGroup" />
+        <Strings>
+          <ButtonText>DoExpect</ButtonText>
+        </Strings>
+      </Button>
+      <Button guid="guidExpectExtensionPackageCmdSet" id="CheckCommandId" priority="0x0100" type="Button">
+        <Parent guid="guidExpectExtensionPackageCmdSet" id="ExpectMenuGroup" />
+        <Strings>
+          <ButtonText>CheckExpect</ButtonText>
+        </Strings>
+      </Button>
+    </Buttons>
+
+  </Commands>
+
+  <Symbols>
+    <!-- This is the package guid. -->
+    <GuidSymbol name="guidExpectExtensionPackage" value="{458f7cd7-62d1-45e7-948f-6ddf1d0da94e}" />
+
+    <!-- This is the guid used to group the menu commands together -->
+    <GuidSymbol name="guidExpectExtensionPackageCmdSet" value="{8fbea08b-8dd8-4a10-b352-9d37b9e60e08}">
+      <IDSymbol name="ExpectMenuGroup" value="0x1020" />
+      <IDSymbol name="GenCommandId" value="0x0100" />
+      <IDSymbol name="DoCommandId" value="0x0101" />
+      <IDSymbol name="CheckCommandId" value="0x0102" />
+    </GuidSymbol>
+  </Symbols>
+</CommandTable>
