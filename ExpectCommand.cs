@@ -94,6 +94,7 @@ namespace ExpectExtension
         /// <param name="commandService">Command service to add command to, not null.</param>
         private ExpectCommand(/*AsyncPackage package,*/ OleMenuCommandService commandService)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             //  this.package = package ?? throw new ArgumentNullException(nameof(package));
             commandService = commandService ?? throw new ArgumentNullException(nameof(commandService));
             commandService.AddCommand(new MenuCommand(delegate { Execute("-o generate "); }, new CommandID(CommandSet, GenCommandId)));
@@ -263,25 +264,28 @@ namespace ExpectExtension
                 break;
             }
             bool isTrace = ini?.KeyExists("trace") ?? false;
-            bool isKeepTemp = ini?.KeyExists("keep-temp") ?? false;
+            bool isKeepTemp = ini?.KeyExists("keep-temp") ?? true;
             string options = ini?.Read("options") ?? "";
-            if (options != "") { options = " " + options; }
-            if (isTrace) { options = " --trace" + options; }
-            if (isKeepTemp) { options = " --keep-temp" + options; }
+            string temp = ini?.Read("temp") ?? "";
+            if (temp == "") { temp = Path.Combine(buildDir, "regtest"); }
             var python = cache.Find("PYTHON_COMMAND:STRING") ?? "python";
             var outDir = "";
             if (dte.Solution.SolutionBuild?.ActiveConfiguration is EnvDTE.SolutionConfiguration conf)
             {
                 outDir = getOutDir(Path.Combine(buildDir, "qac_com/qac.vcxproj"), conf.Name) ?? getOutDir(Path.Combine(buildDir, "qacpp_com/qacpp.vcxproj"), conf.Name) ?? "";
             }
-            if (outDir != "") { options = " --path " + outDir; }
-            options = $"{maketools}/expect.py {operation}-o check {dte.ActiveDocument.FullName}" + options;
+            var args = $"{maketools}/expect.py {operation}-o check {dte.ActiveDocument.FullName}{options}";
+            if (isTrace) { args += " --trace"; }
+            if (temp != "") { args += " --temp " + temp; }
+            if (isKeepTemp) { args += " --keep-temp"; }
+            if (outDir != "") { args += " --path " + outDir; }
+            if (options != "") { args += " " + options; }
             var pane = new PaneHelper();
             if (isTrace)
             {
-                pane.Write(python + " " + options);
+                pane.Write(python + " " + args);
             }
-            Run(python, options, pane);
+            Run(python, args, pane);
             pane.Activate(); // Brings this pane into view
         }
 
