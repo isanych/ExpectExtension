@@ -269,6 +269,7 @@ namespace ExpectExtension
             string temp = ini?.Read("temp") ?? "";
             if (temp == "") { temp = Path.Combine(buildDir, "regtest"); }
             var python = cache.Find("PYTHON_COMMAND:STRING") ?? "python";
+            var install = cache.Find("PRQA_INSTALL_PREFIX_REAL:STRING") ?? "";
             var outDir = "";
             if (dte.Solution.SolutionBuild?.ActiveConfiguration is EnvDTE.SolutionConfiguration conf)
             {
@@ -279,6 +280,7 @@ namespace ExpectExtension
             if (temp != "") { args += " --temp " + temp; }
             if (isKeepTemp) { args += " --keep-temp"; }
             if (outDir != "") { args += " --path " + outDir; }
+            if (install != "") { args += " --install " + install; }
             if (options != "") { args += " " + options; }
             var pane = new PaneHelper();
             if (isTrace)
