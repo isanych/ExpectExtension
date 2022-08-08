@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="ExpectExtension.83f317e2-1f49-4c31-84af-da6e3de64940" Version="1.0" Language="en-US" Publisher="Igor Kostenko" />
+        <Identity Id="ExpectExtension.83f317e2-1f49-4c31-84af-da6e3de64940" Version="1.1" Language="en-US" Publisher="Igor Kostenko" />
         <DisplayName>ExpectExtension</DisplayName>
         <Description xml:space="preserve">Expect Tests Helper</Description>
     </Metadata>
